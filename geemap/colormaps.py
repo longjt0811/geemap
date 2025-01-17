@@ -1,23 +1,101 @@
 """Module for commonly used colormaps and palettes for visualizing Earth Engine data.
 """
+
+# *******************************************************************************#
+# This module contains extra features of the geemap package.                     #
+# The geemap community will maintain the extra features.                         #
+# *******************************************************************************#
+
+
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
 from box import Box
 
 
-def get_palette(cmap_name=None, n_class=None):
+_palette_dict = {
+    "ndvi": [
+        "FFFFFF",
+        "CE7E45",
+        "DF923D",
+        "F1B555",
+        "FCD163",
+        "99B718",
+        "74A901",
+        "66A000",
+        "529400",
+        "3E8601",
+        "207401",
+        "056201",
+        "004C00",
+        "023B01",
+        "012E01",
+        "011D01",
+        "011301",
+    ],
+    "ndwi": [
+        "#ece7f2",
+        "#d0d1e6",
+        "#a6bddb",
+        "#74a9cf",
+        "#3690c0",
+        "#0570b0",
+        "#045a8d",
+        "#023858",
+    ],
+    "dem": ["006633", "E5FFCC", "662A00", "D8D8D8", "F5F5F5"],
+    "dw": [
+        "#419BDF",
+        "#397D49",
+        "#88B053",
+        "#7A87C6",
+        "#E49635",
+        "#DFC35A",
+        "#C4281B",
+        "#A59B8F",
+        "#B39FE1",
+    ],
+    "esri_lulc": [
+        "#1A5BAB",
+        "#358221",
+        "#000000",
+        "#87D19E",
+        "#FFDB5C",
+        "#000000",
+        "#ED022A",
+        "#EDE9E4",
+        "#F2FAFF",
+        "#C8C8C8",
+        "#C6AD8D",
+    ],
+}
+
+
+def get_palette(cmap_name=None, n_class=None, hashtag=False):
     """Get a palette from a matplotlib colormap. See the list of colormaps at https://matplotlib.org/stable/tutorials/colors/colormaps.html.
 
     Args:
         cmap_name (str, optional): The name of the matplotlib colormap. Defaults to None.
         n_class (int, optional): The number of colors. Defaults to None.
+        hashtag (bool, optional): Whether to return a list of hex colors. Defaults to False.
 
     Returns:
         list: A list of hex colors.
     """
-    cmap = plt.cm.get_cmap(cmap_name, n_class)
-    colors = [mpl.colors.rgb2hex(cmap(i))[1:] for i in range(cmap.N)]
+
+    if cmap_name in ["ndvi", "ndwi", "dem", "dw", "esri_lulc"]:
+        colors = _palette_dict[cmap_name]
+    else:
+        cmap = mpl.colormaps[cmap_name]  # Retrieve colormap
+        if n_class:
+            colors = [
+                mpl.colors.rgb2hex(cmap(i / (n_class - 1)))[1:] for i in range(n_class)
+            ]
+        else:
+            colors = [mpl.colors.rgb2hex(cmap(i))[1:] for i in range(cmap.N)]
+    if hashtag:
+        colors = ["#" + i for i in colors]
+
     return colors
 
 
@@ -59,13 +137,19 @@ def get_colorbar(
         plt.show()
 
 
-def list_colormaps():
+def list_colormaps(add_extra=False, lowercase=False):
     """List all available colormaps. See a complete lost of colormaps at https://matplotlib.org/stable/tutorials/colors/colormaps.html.
 
     Returns:
         list: The list of colormap names.
     """
-    return plt.colormaps()
+    result = plt.colormaps()
+    if add_extra:
+        result += ["dem", "ndvi", "ndwi"]
+    if lowercase:
+        result = [i.lower() for i in result]
+    result.sort()
+    return result
 
 
 def plot_colormap(
@@ -95,7 +179,7 @@ def plot_colormap(
         return_fig (bool, optional): Whether to return the figure. Defaults to False.
     """
     fig, ax = plt.subplots(figsize=(width, height))
-    col_map = plt.get_cmap(cmap)
+    col_map = mpl.colormaps[cmap]
 
     norm = mpl.colors.Normalize(vmin=vmin, vmax=vmax)
 
@@ -131,7 +215,7 @@ def plot_colormaps(width=8.0, height=0.4):
     gradient = np.vstack((gradient, gradient))
 
     for ax, name in zip(axes, cmap_list):
-        ax.imshow(gradient, aspect="auto", cmap=plt.get_cmap(name))
+        ax.imshow(gradient, aspect="auto", cmap=mpl.colormaps[name])
         ax.set_axis_off()
         pos = list(ax.get_position().bounds)
         x_text = pos[0] - 0.01
@@ -144,39 +228,6 @@ def plot_colormaps(width=8.0, height=0.4):
 
     plt.show()
 
-
-_palette_dict = {
-    "ndvi": [
-        "FFFFFF",
-        "CE7E45",
-        "DF923D",
-        "F1B555",
-        "FCD163",
-        "99B718",
-        "74A901",
-        "66A000",
-        "529400",
-        "3E8601",
-        "207401",
-        "056201",
-        "004C00",
-        "023B01",
-        "012E01",
-        "011D01",
-        "011301",
-    ],
-    "ndwi": [
-        "#ece7f2",
-        "#d0d1e6",
-        "#a6bddb",
-        "#74a9cf",
-        "#3690c0",
-        "#0570b0",
-        "#045a8d",
-        "#023858",
-    ],
-    "dem": ["006633", "E5FFCC", "662A00", "D8D8D8", "F5F5F5"],
-}
 
 for index, cmap_name in enumerate(list_colormaps()):
     if index < len(list_colormaps()):

@@ -1,6 +1,11 @@
 """Module of sample legends for some commonly used geospatial datasets.
 """
 
+# *******************************************************************************#
+# This module contains extra features of the geemap package.                     #
+# The geemap community will maintain the extra features.                         #
+# *******************************************************************************#
+
 import os
 
 
@@ -13,7 +18,7 @@ builtin_legends = {
         "21 Developed, Open Space": "dec5c5",
         "22 Developed, Low Intensity": "d99282",
         "23 Developed, Medium Intensity": "eb0000",
-        "24 Developed High Intensity": "ab0000",
+        "24 Developed, High Intensity": "ab0000",
         "31 Barren Land (Rock/Sand/Clay)": "b3ac9f",
         "41 Deciduous Forest": "68ab5f",
         "42 Evergreen Forest": "1c5f2c",
@@ -29,6 +34,7 @@ builtin_legends = {
         "90 Woody Wetlands": "b8d9eb",
         "95 Emergent Herbaceous Wetlands": "6c9fb8",
     },
+    # https://developers.google.com/earth-engine/datasets/catalog/ESA_WorldCover_v100
     "ESA_WorldCover": {
         "10 Trees": "006400",
         "20 Shrubland": "ffbb22",
@@ -41,6 +47,42 @@ builtin_legends = {
         "90 Herbaceous wetland": "0096a0",
         "95 Mangroves": "00cf75",
         "100 Moss and lichen": "fae6a0",
+    },
+    # https://samapriya.github.io/awesome-gee-community-datasets/projects/esrilc2020/
+    "ESRI_LandCover": {
+        "1 Water": "1A5BAB",
+        "2 Trees": "358221",
+        "3 Grass": "A7D282",
+        "4 Flooded Vegetation": "87D19E",
+        "5 Crops": "FFDB5C",
+        "6 Shrub & Scrub": "EECFA8",
+        "7 Built Area": "ED022A",
+        "8 Bare Ground": "EDE9E4",
+        "9 Snow/Ice": "F2FAFF",
+        "10 Clouds": "C8C8C8",
+    },
+    # https://samapriya.github.io/awesome-gee-community-datasets/projects/S2TSLULC/
+    "ESRI_LandCover_TS": {
+        "1 Water": "1A5BAB",
+        "2 Trees": "358221",
+        "4 Flooded Vegetation": "87D19E",
+        "5 Crops": "FFDB5C",
+        "7 Built Area": "ED022A",
+        "8 Bare Ground": "EDE9E4",
+        "9 Snow/Ice": "F2FAFF",
+        "10 Clouds": "C8C8C8",
+        "11 Rangeland": "C6AD8D",
+    },
+    "Dynamic_World": {
+        "0 Water": "419BDF",
+        "1 Trees": "397D49",
+        "2 Grass": "88B053",
+        "3 Flooded vegetation": "7A87C6",
+        "4 Crops": "E49635",
+        "5 Shrub & Scrub": "DFC35A",
+        "6 Built-up area": "C4281B",
+        "7 Bare ground": "A59B8F",
+        "8 Snow & Ice": "B39FE1",
     },
     # National Wetlands Inventory Legend: https://www.fws.gov/wetlands/data/Mapper-Wetlands-Legend.html
     "NWI": {
@@ -74,6 +116,26 @@ builtin_legends = {
         "16 Barren or sparsely vegetated": "f9ffa4",
         "254 Unclassified": "ffffff",
     },
+    # MCD12Q1.006 Land Cover Type Yearly Global 500m https://developers.google.com/earth-engine/datasets/catalog/MODIS_006_MCD12Q1
+    "MODIS/006/MCD12Q1": {
+        "1 Evergreen needleleaf forest": "05450a",
+        "2 Evergreen broadleaf forest": "086a10",
+        "3 Deciduous needleleaf forest": "54a708",
+        "4 Deciduous broadleaf forest": "78d203",
+        "5 Mixed forest": "009900",
+        "6 Closed shrublands": "c6b044",
+        "7 Open shrublands": "dcd159",
+        "8 Woody savannas": "dade48",
+        "9 Savannas": "fbff13",
+        "10 Grasslands": "b6ff05",
+        "11 Permanent wetlands": "27ff87",
+        "12 Croplands": "c24f44",
+        "13 Urban and built-up": "a5a5a5",
+        "14 Cropland/natural vegetation mosaic": "ff6d4c",
+        "15 Snow and ice": "69fff8",
+        "16 Barren or sparsely vegetated": "f9ffa4",
+        "17 Water bodies": "1c0dff",
+    },
     # GlobCover: Global Land Cover Map https://developers.google.com/earth-engine/datasets/catalog/ESA_GLOBCOVER_L4_200901_200912_V2_3
     "GLOBCOVER": {
         "11 Post-flooding or irrigated croplands": "aaefef",
@@ -105,26 +167,6 @@ builtin_legends = {
         "1 Forest": "006400",
         "2 Non-Forest": "FEFF99",
         "3 Water": "0000FF",
-    },
-    # MCD12Q1.006 MODIS Land Cover Type Yearly Global 500m https://developers.google.com/earth-engine/datasets/catalog/MODIS_006_MCD12Q1
-    "MODIS/006/MCD12Q1": {
-        "1 Evergreen Needleleaf Forests: dominated by evergreen conifer trees (canopy >2m). Tree cover >60%.": "05450a",
-        "2 Evergreen Broadleaf Forests: dominated by evergreen broadleaf and palmate trees (canopy >2m). Tree cover >60%.": "086a10",
-        "3 Deciduous Needleleaf Forests: dominated by deciduous needleleaf (larch) trees (canopy >2m). Tree cover >60%.": "54a708",
-        "4 Deciduous Broadleaf Forests: dominated by deciduous broadleaf trees (canopy >2m). Tree cover >60%.": "78d203",
-        "5 Mixed Forests: dominated by neither deciduous nor evergreen (40-60% of each) tree type (canopy >2m). Tree cover >60%.": "009900",
-        "6 Closed Shrublands: dominated by woody perennials (1-2m height) >60% cover.": "c6b044",
-        "7 Open Shrublands: dominated by woody perennials (1-2m height) 10-60% cover.": "dcd159",
-        "8 Woody Savannas: tree cover 30-60% (canopy >2m).": "dade48",
-        "9 Savannas: tree cover 10-30% (canopy >2m).": "fbff13",
-        "10 Grasslands: dominated by herbaceous annuals (<2m).": "b6ff05",
-        "11 Permanent Wetlands: permanently inundated lands with 30-60% water cover and >10% vegetated cover.": "27ff87",
-        "12 Croplands: at least 60% of area is cultivated cropland.": "c24f44",
-        "13 Urban and Built-up Lands: at least 30% impervious surface area including building materials, asphalt and vehicles.": "a5a5a5",
-        "14 Cropland/Natural Vegetation Mosaics: mosaics of small-scale cultivation 40-60% with natural tree, shrub, or herbaceous vegetation.": "ff6d4c",
-        "15 Permanent Snow and Ice: at least 60% of area is covered by snow and ice for at least 10 months of the year.": "69fff8",
-        "16 Barren: at least 60% of area is non-vegetated barren (sand, rock, soil) areas with less than 10% vegetation.": "f9ffa4",
-        "17 Water Bodies: at least 60% of area is covered by permanent water bodies.": "1c0dff",
     },
     # Oxford MAP: Malaria Atlas Project Fractional International Geosphere-Biosphere Programme Landcover https://developers.google.com/earth-engine/datasets/catalog/Oxford_MAP_IGBP_Fractional_Landcover_5km_Annual
     "Oxford": {
@@ -423,6 +465,23 @@ builtin_legends = {
         "249 Gourds": "ff6666",
         "250 Cranberries": "ff6666",
         "254 Dbl Crop Barley/Soybeans": "267000",
+    },
+    "ALOS_landforms": {
+        "11 Peak/ridge (warm)": "141414",
+        "12 Peak/ridge": "383838",
+        "13 Peak/ridge (cool)": "808080",
+        "14 Mountain/divide": "EBEB8F",
+        "15 Cliff": "F7D311",
+        "21 Upper slope (warm)": "AA0000",
+        "22 Upper slope": "D89382",
+        "23 Upper slope (cool)": "DDC9C9",
+        "24 Upper slope (flat)": "DCCDCE",
+        "31 Lower slope (warm)": "1C6330",
+        "32 Lower slope": "68AA63",
+        "33 Lower slope (cool)": "B5C98E",
+        "34 Lower slope (flat)": "E1F0E5",
+        "41 Valley": "a975ba",
+        "42 Valley (narrow)": "6f198c",
     },
 }
 

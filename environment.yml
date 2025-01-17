@@ -1,28 +1,26 @@
-name: gee
+name: geo-env
 channels:
     - conda-forge
 dependencies:
     - cartopy
     - datapane
+    - flask>=2.0.0
+    - flask-caching
     - gdal
-    - geemap
+    - geemap>=0.20.0
     - geopandas
     - imageio
-    - ipyleaflet
-    - jupyterlab=3
+    - ipyvtklink
     - keplergl
-    - leafmap
-    - localtileserver
-    - nodejs
+    - laspy
+    - leafmap>=0.18.0
+    - localtileserver>=0.4.0
     - osmnx
-    - palettable
     - pip
-    - psycopg2
     - pydeck
-    - pydeck-earthengine-layers
-    - scipy
-    - sqlalchemy
+    - pyntcloud
+    - python>=3.9
+    - pyvista
+    - requests
+    - rio-cogeo
     - tifffile
-    - xarray_leaflet
-    - pip:
-          - localtileserver
